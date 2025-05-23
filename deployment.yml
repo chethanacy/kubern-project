@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kuber-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kuber
+  template:
+    metadata:
+      labels:
+        app: kuber
+    spec:
+      containers:
+        - name: kuber
+          image: chethana756/kuber
+          ports:
+            - containerPort: 80
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              echo "Served by $(hostname)" >> /usr/local/apache2/htdocs/index.html && \
+              httpd-foreground
